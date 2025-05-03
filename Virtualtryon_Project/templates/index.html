@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Virtual Glasses Try-On</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2D3142;
+      --secondary: #BFC0C0;
+      --accent: #EF8354;
+      --background: #F4F4F4;
+      --text: #1C1C1C;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .header {
+      text-align: center;
+      margin: 40px 0 30px 0;
+      color: var(--primary);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      background: var(--background);
+      z-index: 1000;
+      padding: 20px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .header h1 {
+      margin: 0 0 10px 0;
+      font-size: 3rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+    }
+    .header p {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+    .header p.encouraging {
+      margin-top: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-style: italic;
+      text-shadow: 0 0 5px var(--accent);
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px var(--shadow);
+      padding: 32px 24px;
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .video {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .video img {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px var(--shadow);
+      border: 3px solid var(--primary);
+      background: #fff;
+      user-select: none;
+      transition: opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    .glasses-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      justify-content: center;
+      margin-top: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+      border-radius: 12px;
+      background: var(--background);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .glasses-img-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glasses-img {
+      width: 100px;
+      border-radius: 12px;
+      border: 3px solid transparent;
+      box-shadow: 0 2px 8px var(--shadow);
+      background: #fff;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      filter: grayscale(40%);
+      user-select: none;
+      
+    }
+
+    .glasses-img.selected,
+    .glasses-img:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 18px var(--accent);
+      transform: scale(1.08) rotate(-2deg);
+      filter: grayscale(0%);
+      z-index: 1;
+    }
+
+    .selected-badge {
+      display: none;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      padding: 3px 6px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .glasses-img.selected + .selected-badge {
+      display: block;
+    }
+
+    .footer {
+      text-align: center;
+      margin: 50px 0 20px 0;
+      color: var(--primary);
+      font-size: 1rem;
+      letter-spacing: 1px;
+      border-top: 1px solid var(--secondary);
+      padding-top: 15px;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .footer p {
+      margin: 6px 0;
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 30px;
+      }
+      .video, .glasses-list {
+        flex: 1;
+      }
+      .video {
+        margin-bottom: 0;
+      }
+      .glasses-list {
+        max-height: 520px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 16px 4px;
+      }
+      .video img {
+        max-width: 98vw;
+      }
+      .glasses-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-height: none;
+        padding-bottom: 16px;
+      }
+      .glasses-img {
+        width: 70px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+  <script>
+    function selectGlass(idx) {
+      fetch('/select_glass/' + idx)
+        .then(() => {
+          document.querySelectorAll('.glasses-img').forEach((img, i) => {
+            img.classList.toggle('selected', i + 1 === idx);
+          });
+        });
+    }
+
+    window.onload = function () {
+      const video = document.getElementById("video-stream");
+      video.src = "{{ url_for('video_feed') }}";
+      video.onload = () => video.style.opacity = 1;
+    };
+  </script>
+</head>
+<body>
+  <div class="header">
+    <h1>Virtual Glasses Try-On</h1>
+    <p>Choose your favorite frame and see it live in style!</p>
+    <p class="encouraging">Discover your perfect look - effortless, fun, and just a click away.</p>
+  </div>
+
+  <div class="container">
+    <div class="video">
+      <img id="video-stream" src="" alt="Live Video Stream" />
+    </div>
+    <div class="glasses-list">
+      {% for glass in glasses %}
+        <div class="glasses-img-wrapper">
+          <img src="{{ url_for('static', filename='Glass_image/' + glass) }}"
+               alt="Glasses {{ loop.index }}"
+               class="glasses-img{% if loop.index == selected %} selected{% endif %}"
+               title="Try Glasses {{ loop.index }}"
+               onclick="selectGlass({{ loop.index }})"
+               draggable="false"
+               tabindex="0"
+               onkeypress="if(event.key === 'Enter'){ selectGlass({{ loop.index }}) }"
+          />
+          <span class="selected-badge">✔</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Virtual Glasses Try-On &mdash; Find Your Look in Style!</p>
+    <p>Need help? <a href="mailto:support@virtualglasses.com">Contact us</a></p>
+  </div>
+</body>
+</html>

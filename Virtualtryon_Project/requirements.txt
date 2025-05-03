@@ -1,0 +1,5 @@
+OpenCV-contrib-python
+OpenCV-python-headless
+Numpy
+Cvzone
+Flask
