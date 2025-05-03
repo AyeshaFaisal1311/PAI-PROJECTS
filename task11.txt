@@ -1,0 +1,60 @@
+1. LangChain
+
+-An opensource framework for building apps with Large Language Models (LLMs).
+
+-Allows chaining together prompts, models, and external data sources (APIs, databases).
+
+
+2. RAG (Retrieval-Augmented Generation)
+
+-An AI technique that combines LLMs with external data retrieval for more accurate responses.
+
+-Uses a retriever and a generator (to create answers using those documents).
+
+
+
+3. LLMs (Large Language Models)
+
+-AI models trained on massive text datasets to generate human-like language.
+
+Examples: GPT-4, Llama 2.
+
+-Can answer questions, summarize,translate, and generate content, but limited to their training data.
+
+
+
+4. FAISS
+
+-A library for efficient similarity search and clustering of dense vectors.
+
+-Commonly used to quickly find relevant text/document embeddings in large datasets for RAG and search systems.
+
+
+5. Vector
+
+-A mathematical representation of data (e.g., text, image) as a list of numbers (embedding).
+
+-Used for comparing similarity between pieces of data in AI systems.
+
+
+6. VectorDB (Vector Database)
+
+-A database designed to store and search vectors (embeddings) efficiently.
+
+-Enables fast retrieval of similar documents for RAG and semantic search.
+
+Examples: Pinecone,FAISS.
+
+
+7. Generative AI
+
+A broad category of AI that creates new content (text, images, music, etc.) from learned data patterns or data sets.
+
+-Includes LLMs, image generators, and more.
+
+
+8. GANs (Generative Adversarial Networks)
+
+-A type of generative AI model with two networks (generator and discriminator) competing to create realistic data.
+
+-Widely used for generating images, videos, and synthetic data.
